@@ -21,7 +21,7 @@
                 <div class="space-y-1">
                     <label class="label-text required" for="code">Code</label>
                     <input type="text" class="input @error('code') is-invalid @enderror" id="code"
-                        name="code" value="{{ old('code') }}" required />
+                        name="code" value="{{ old('code') }}" required autofocus />
                     @error('code')
                         <span class="helper-text">{{ $message }}</span>
                     @enderror
