@@ -1,14 +1,7 @@
-@props([
-    'label',
-    'name',
-    'id' => null,
-    'type' => 'text',
-    'value' => null,
-    'required' => false,
-    'wrapperClass' => '',
-])
+@props(['label', 'name', 'id' => null, 'value' => null, 'required' => false, 'wrapperClass' => ''])
 
 @php
+    // Safe HTML id (no brackets)
     $inputId = $id ?? str_replace(['[', ']'], ['_', ''], $name);
 
     // Convert array name to dot notation for Laravel
@@ -21,12 +14,8 @@
         {{ $label }}
     </label>
 
-    <input
-        {{ $attributes->merge([
-            'class' => 'input ' . ($errors->has($errorKey) ? 'is-invalid' : ''),
-        ]) }}
-        type="{{ $type }}" id="{{ $inputId }}" name="{{ $name }}"
-        value="{{ old($errorKey, $value) }}" />
+    <textarea class="textarea {{ $errors->has($errorKey) ? 'is-invalid' : '' }}" id="{{ $inputId }}"
+        name="{{ $name }}" {{ $attributes }}>{{ old($errorKey, $value) }}</textarea>
 
     @error($errorKey)
         <span class="helper-text">{{ $message }}</span>

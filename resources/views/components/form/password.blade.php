@@ -1,15 +1,20 @@
-@props(['label', 'name' => 'password', 'id' => null, 'required' => false])
+@props(['label', 'name' => 'password', 'id' => null, 'required' => false, 'wrapperClass' => ''])
 
 @php
-    $inputId = $id ?? $name;
+    // Safe ID (no brackets)
+    $inputId = $id ?? str_replace(['[', ']'], ['_', ''], $name);
+
+    // Convert array name to dot notation for validation/errors
+    $errorKey = str_replace(['[', ']'], ['.', ''], $name);
+    $errorKey = rtrim($errorKey, '.');
 @endphp
 
-<div class="space-y-1">
+<div class="space-y-1 {{ $wrapperClass }}">
     <label class="label-text {{ $required ? 'required' : '' }}" for="{{ $inputId }}">
         {{ $label }}
     </label>
 
-    <div class="input @error($name) is-invalid @enderror">
+    <div class="input {{ $errors->has($errorKey) ? 'is-invalid' : '' }}">
         <input id="{{ $inputId }}" type="password" name="{{ $name }}" autocomplete="new-password"
             {{ $attributes }} />
 
@@ -20,7 +25,7 @@
         </button>
     </div>
 
-    @error($name)
+    @error($errorKey)
         <span class="helper-text">{{ $message }}</span>
     @enderror
 </div>
