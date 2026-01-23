@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Usercontroller;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,5 +14,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('profile')->middleware('password.confirm');
 
     // User Master
-    Route::resource('users', Usercontroller::class);
+    Route::resource('users', UserController::class);
 });
