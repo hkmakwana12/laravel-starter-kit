@@ -16,7 +16,6 @@ class UserController extends Controller
      */
     public function index()
     {
-
         $users = QueryBuilder::for(User::class)
             ->allowedFilters([
                 // Global search across multiple fields
